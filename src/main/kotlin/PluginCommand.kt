@@ -27,4 +27,14 @@ object PluginCommand : CompositeCommand(
         PluginConfig.enabledGroups.remove(group.id)
         sendMessage("OK")
     }
+
+    @SubCommand
+    suspend fun CommandSender.quiet(group: Group? = getGroupOrNull()) {
+        if (group == null) {
+            sendMessage("必须指定群")
+            return
+        }
+        PluginConfig.quietGroups.add(group.id)
+        sendMessage("OK")
+    }
 }

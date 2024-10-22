@@ -77,6 +77,8 @@ object PluginMain : KotlinPlugin(
                 }
 
                 startsWith(prefix) quoteReply {
+                    // 是否对错误保持静默
+                    val quiet = PluginConfig.quietGroups.contains(group.id)
                     val game = games[group.id]
                     if (game != null) {
                         try {
@@ -112,17 +114,18 @@ object PluginMain : KotlinPlugin(
                                     // 更新均值
                                     stat.avgTime += (t - stat.avgTime) / stat.count
 
-                                    "答对了！用时:${df.format(t)}s 平均:${df.format(stat.avgTime)}s 最快:${df.format(stat.minTime)}s\n" +
-                                        "下一题：$newGame"
+                                    "答对了！用时:${df.format(t)}s 平均:${df.format(stat.avgTime)}s 最快:${df.format(stat.minTime)}s\n下一题：$newGame"
                                 } else {
                                     "答对了！下一题：$newGame"
                                 }
                             } else {
-                                "答错了，计算结果为 $result"
+                                if (quiet) Unit
+                                else "答错了，计算结果为 $result"
                             }
                         } catch (e: Throwable) {
 //                        logger.error(e)
-                            "错误：${e.message}"
+                            if (quiet) Unit
+                            else "错误：${e.message}"
                         }
                     } else Unit
                 }
