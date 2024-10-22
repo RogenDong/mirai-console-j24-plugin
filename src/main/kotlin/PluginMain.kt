@@ -62,15 +62,15 @@ object PluginMain : KotlinPlugin(
                         val sb = StringBuilder()
                         sb.appendLine("[均时榜]")
                         sb.append(g.entries.filter { it.value.avgTime != 0.0 }.sortedBy { it.value.avgTime }.take(3).joinToString("\n") {
-                            "${df.format(it.value.avgTime)}s | ${group[it.key]?.nameCardOrNick ?: "侠名"}"
+                            "${df.format(it.value.avgTime)}s | ${group[it.key]?.nameCardOrNick ?: "佚名"}"
                         }).appendLine().appendLine()
                         sb.appendLine("[速度榜]")
                         sb.append(g.entries.sortedBy { it.value.minTime }.take(3).joinToString("\n") {
-                            "${df.format(it.value.minTime)}s | ${group[it.key]?.nameCardOrNick ?: "侠名"}"
+                            "${df.format(it.value.minTime)}s | ${group[it.key]?.nameCardOrNick ?: "佚名"}"
                         }).appendLine().appendLine()
                         sb.appendLine("[答题榜]")
                         sb.append(g.entries.sortedByDescending { it.value.totalCount }.take(3).joinToString("\n") {
-                            "${it.value.totalCount} 道 | ${group[it.key]?.nameCardOrNick ?: "侠名"}"
+                            "${it.value.totalCount} 道 | ${group[it.key]?.nameCardOrNick ?: "佚名"}"
                         })
                         sb.toString()
                     } else Unit
